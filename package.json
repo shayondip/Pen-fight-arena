@@ -1,0 +1,33 @@
+{
+  "name": "pen-fight-arena",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Pen Fight Arena - realtime 3D online multiplayer pen fighting game with server-authoritative Rapier physics.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.11.0"
+  },
+  "workspaces": [
+    "shared",
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "postinstall": "tsc -p shared/tsconfig.json",
+    "build:shared": "tsc -p shared/tsconfig.json",
+    "dev": "npm run build:shared && concurrently -n SERVER,CLIENT -c magenta,cyan \"npm:dev:server\" \"npm:dev:client\"",
+    "dev:server": "npm run dev --workspace @pfa/server",
+    "dev:client": "npm run dev --workspace @pfa/client",
+    "build": "npm run build:shared && npm run build --workspace @pfa/server && npm run build --workspace @pfa/client",
+    "start": "npm run start --workspace @pfa/server",
+    "test": "npm run build:shared && npm run test --workspace @pfa/server",
+    "typecheck": "npm run build:shared && npm run typecheck --workspace @pfa/server && npm run typecheck --workspace @pfa/client",
+    "prisma:generate": "npm run prisma:generate --workspace @pfa/server",
+    "prisma:push": "npm run prisma:push --workspace @pfa/server",
+    "doctor": "node scripts/doctor.mjs"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0",
+    "typescript": "^5.6.3"
+  }
+}

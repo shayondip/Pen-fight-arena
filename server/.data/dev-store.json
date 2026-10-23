@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "profiles": [
+    {
+      "id": "dc6b9400-a887-419b-97f1-baa920582a5b",
+      "clientId": "b8ed4ca7b39747790ac6896c963839c2",
+      "secretHash": "45e0923a3d3b76a3e4f4ed39244a99f9f997e692c357495715006e3b23d7edb0",
+      "nickname": "jeve",
+      "rating": 1000,
+      "coins": 305,
+      "wins": 0,
+      "losses": 0,
+      "draws": 0,
+      "gamesPlayed": 0,
+      "attributes": {
+        "impact": 0,
+        "stability": 0,
+        "control": 0,
+        "recovery": 0
+      },
+      "skinId": "classic-blue",
+      "ownedSkins": [
+        "classic-blue",
+        "crimson-red"
+      ],
+      "createdAt": "2026-10-23T07:19:10.446Z",
+      "updatedAt": "2026-10-23T07:20:53.870Z"
+    }
+  ],
+  "matches": []
+}

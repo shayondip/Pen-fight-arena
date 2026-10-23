@@ -1,0 +1,75 @@
+// Prisma schema for Pen Fight Arena.
+//
+// This is only used when DATABASE_URL points at a reachable PostgreSQL
+// instance. Without it the server falls back to the local JSON development
+// store, and says so in the console and in the UI.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Profile {
+  id          String   @id @default(uuid())
+  clientId    String   @unique
+  secretHash  String
+  nickname    String
+  rating      Int      @default(1000)
+  coins       Int      @default(150)
+  wins        Int      @default(0)
+  losses      Int      @default(0)
+  draws       Int      @default(0)
+  gamesPlayed Int      @default(0)
+
+  impact    Int @default(0)
+  stability Int @default(0)
+  control   Int @default(0)
+  recovery  Int @default(0)
+
+  skinId     String   @default("classic-blue")
+  ownedSkins String[] @default(["classic-blue", "crimson-red"])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  matchesAsA Match[] @relation("PlayerA")
+  matchesAsB Match[] @relation("PlayerB")
+
+  @@index([rating])
+  @@index([wins])
+}
+
+model Match {
+  id       String @id @default(uuid())
+  roomCode String
+  mode     String
+  arenaId  String
+
+  playerAId       String
+  playerBId       String
+  playerANickname String
+  playerBNickname String
+
+  playerA Profile @relation("PlayerA", fields: [playerAId], references: [id], onDelete: Cascade)
+  playerB Profile @relation("PlayerB", fields: [playerBId], references: [id], onDelete: Cascade)
+
+  // "A" | "B" | "draw"
+  outcome String
+  reason  String
+
+  ratingADelta Int
+  ratingBDelta Int
+  ratingAAfter Int
+  ratingBAfter Int
+
+  durationMs Int
+  playedAt   DateTime @default(now())
+
+  @@index([playedAt])
+  @@index([playerAId])
+  @@index([playerBId])
+}
